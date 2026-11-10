@@ -1,0 +1,32 @@
+:root { --ink:#1d2433; --muted:#5b6475; --line:#d9dde6; --bg:#f6f7f9; --accent:#1f5fbf; --ok:#12724a; --bad:#b3261e; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Noto Sans Bengali", "Segoe UI", system-ui, sans-serif; color:var(--ink); background:var(--bg); line-height:1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+h1 { font-size: 1.6rem; margin: 0 0 16px; }
+label { display:block; font-weight:600; margin: 10px 0 4px; }
+input { width:100%; padding:10px 12px; font:inherit; border:1px solid var(--line); border-radius:6px; background:#fff; }
+button { font:inherit; padding:9px 16px; border:0; border-radius:6px; background:var(--accent); color:#fff; cursor:pointer; white-space:nowrap; }
+button:disabled { background:#b9bfcc; cursor:not-allowed; }
+button.ghost { background:#fff; color:var(--bad); border:1px solid var(--bad); }
+button.ghost:disabled { color:#b9bfcc; border-color:#d9dde6; }
+:focus-visible { outline:3px solid #f2b705; outline-offset:2px; }
+.idbox { background:#fff; border:1px solid var(--line); border-radius:8px; padding:12px 16px 16px; margin-bottom:12px; }
+.row { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
+.row input { flex:1; min-width:200px; }
+.msg { padding:10px 14px; border-radius:6px; margin-bottom:10px; }
+.msg.err { background:#fdecea; color:var(--bad); border:1px solid #f3b8b3; }
+.msg.ok { background:#e6f4ec; color:var(--ok); border:1px solid #b5dcc6; }
+nav { display:flex; gap:6px; margin:14px 0; flex-wrap:wrap; }
+.tab { background:#fff; color:var(--ink); border:1px solid var(--line); }
+.tab.active { background:var(--ink); color:#fff; border-color:var(--ink); }
+.table-wrap { overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:8px; }
+table { width:100%; border-collapse:collapse; }
+th, td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); }
+th { color:var(--muted); font-weight:600; }
+tr:last-child td { border-bottom:0; }
+.card { background:#fff; border:1px solid var(--line); border-left:5px solid var(--accent); border-radius:8px; padding:12px 16px; margin-bottom:10px; }
+.card.status-CONFIRMED { border-left-color:var(--ok); }
+.card.status-EXPIRED, .card.status-CANCELLED { border-left-color:#9aa1b0; }
+.card p { margin:6px 0; }
+.card-title { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.badge { color:var(--muted); }

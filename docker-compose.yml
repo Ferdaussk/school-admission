@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: school
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d school"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build: ./backend
+    environment:
+      ConnectionStrings__Default: Host=db;Port=5432;Database=school;Username=postgres;Password=postgres
+      HOLD_DURATION_SECONDS: ${HOLD_DURATION_SECONDS:-600}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_URL: ${API_URL:-http://localhost:8080}
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  # Only for running tests: docker compose --profile test run --rm backend-tests
+  backend-tests:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    profiles: ["test"]
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      ConnectionStrings__Default: Host=db;Port=5432;Database=school_test;Username=postgres;Password=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    command: dotnet test tests/SchoolAdmission.Tests
+
+volumes:
+  pgdata:
